@@ -1,0 +1,113 @@
+PPRint vs print
+
+1. print() (Standard Output)
+The built-in print() function converts any object passed to it into a raw string and writes it directly to the standard output (stdout).
+
+The Problem: It does not understand structure. If you pass it a massive dictionary or a list containing multiple dictionaries, it prints the entire data structure on a single, continuous, wrapping line.
+
+When to use it: For flat strings, simple variables, tracking script status (e.g., print("Commit successful")), or formatting simple outputs.
+
+2. pprint() (Pretty Print)
+The pprint module (which must be imported via from pprint import pprint) uses a specific formatting algorithm to analyze the data structure's depth and contents before writing to the screen.
+
+The Mechanics: It analyzes the stream window width (defaulting to 80 characters). If a data structure cannot fit cleanly on one line, it breaks the elements onto separate lines, sorts dictionary keys alphabetically for consistency, and applies vertical, structured indentation.
+
+When to use it: For complex data analytics, viewing nested API payloads, tracking large database lists, or debugging network state structures (like your parsed ARP table array).
+
+============================================================
+how pprint breaks intop separate lines
+
+
+pprint() inspects the data type boundaries (like [ for lists or { for dictionaries). It treats these opening characters as structural breakpoints.
+
+============================================================
+
+.
+
+
+(.venv) root@ubuntu:~/Python-Automation# python3 class3/data_struct_ex1.py 
+********************************************************************************
+ARP_DATA IN LIST FORMAT
+['Protocol  Address          Age (min)  Hardware Addr   Type   Interface', 'Internet  10.220.88.1            67   0062.ec29.70fe  ARPA   GigabitEthernet0/0/0', 'Internet  10.220.88.20           29   c89c.1dea.0eb6  ARPA   GigabitEthernet0/0/0', 'Internet  10.220.88.22            -   a093.5141.b780  ARPA   GigabitEthernet0/0/0', 'Internet  10.220.88.37          104   0001.00ff.0001  ARPA   GigabitEthernet0/0/0', 'Internet  10.220.88.38          161   0002.00ff.0001  ARPA   GigabitEthernet0/0/0']
+################################################################################
+[{'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.1',
+  'mac_addr': '0062.ec29.70fe'}]
+NOT PRETTY PRINT
+[{'mac_addr': '0062.ec29.70fe', 'ip_addr': '10.220.88.1', 'interface': 'GigabitEthernet0/0/0'}]
+
+################################################################################
+[{'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.1',
+  'mac_addr': '0062.ec29.70fe'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.20',
+  'mac_addr': 'c89c.1dea.0eb6'}]
+NOT PRETTY PRINT
+[{'mac_addr': '0062.ec29.70fe', 'ip_addr': '10.220.88.1', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': 'c89c.1dea.0eb6', 'ip_addr': '10.220.88.20', 'interface': 'GigabitEthernet0/0/0'}]
+
+################################################################################
+[{'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.1',
+  'mac_addr': '0062.ec29.70fe'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.20',
+  'mac_addr': 'c89c.1dea.0eb6'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.22',
+  'mac_addr': 'a093.5141.b780'}]
+NOT PRETTY PRINT
+[{'mac_addr': '0062.ec29.70fe', 'ip_addr': '10.220.88.1', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': 'c89c.1dea.0eb6', 'ip_addr': '10.220.88.20', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': 'a093.5141.b780', 'ip_addr': '10.220.88.22', 'interface': 'GigabitEthernet0/0/0'}]
+
+################################################################################
+[{'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.1',
+  'mac_addr': '0062.ec29.70fe'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.20',
+  'mac_addr': 'c89c.1dea.0eb6'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.22',
+  'mac_addr': 'a093.5141.b780'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.37',
+  'mac_addr': '0001.00ff.0001'}]
+NOT PRETTY PRINT
+[{'mac_addr': '0062.ec29.70fe', 'ip_addr': '10.220.88.1', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': 'c89c.1dea.0eb6', 'ip_addr': '10.220.88.20', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': 'a093.5141.b780', 'ip_addr': '10.220.88.22', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': '0001.00ff.0001', 'ip_addr': '10.220.88.37', 'interface': 'GigabitEthernet0/0/0'}]
+
+################################################################################
+[{'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.1',
+  'mac_addr': '0062.ec29.70fe'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.20',
+  'mac_addr': 'c89c.1dea.0eb6'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.22',
+  'mac_addr': 'a093.5141.b780'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.37',
+  'mac_addr': '0001.00ff.0001'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.38',
+  'mac_addr': '0002.00ff.0001'}]
+NOT PRETTY PRINT
+[{'mac_addr': '0062.ec29.70fe', 'ip_addr': '10.220.88.1', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': 'c89c.1dea.0eb6', 'ip_addr': '10.220.88.20', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': 'a093.5141.b780', 'ip_addr': '10.220.88.22', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': '0001.00ff.0001', 'ip_addr': '10.220.88.37', 'interface': 'GigabitEthernet0/0/0'}, {'mac_addr': '0002.00ff.0001', 'ip_addr': '10.220.88.38', 'interface': 'GigabitEthernet0/0/0'}]
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+'Final list'
+[{'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.1',
+  'mac_addr': '0062.ec29.70fe'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.20',
+  'mac_addr': 'c89c.1dea.0eb6'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.22',
+  'mac_addr': 'a093.5141.b780'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.37',
+  'mac_addr': '0001.00ff.0001'},
+ {'interface': 'GigabitEthernet0/0/0',
+  'ip_addr': '10.220.88.38',
+  'mac_addr': '0002.00ff.0001'}]
