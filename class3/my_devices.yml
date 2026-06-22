@@ -1,0 +1,8 @@
+- device_name: leaf1
+  host: 10.83.173.215
+  password: Python
+  username: python
+- device_name: leaf2
+  host: 10.83.173.217
+  password: Python
+  username: python
