@@ -65,6 +65,20 @@ If default_flow_style=True (or omitted in older versions): YAML will use its "in
 
 
 [{device_name: leaf1, host: 10.83.173.215, {device_name: leaf2, host: 10.83.173.217}]
+
+
+
+******************************************************
+below is the output
+
+[{'device_name': 'leaf1',
+  'host': '10.83.173.215',
+  'password': 'Python',
+  'username': 'python'},
+ {'device_name': 'leaf2',
+  'host': '10.83.173.217',
+  'password': 'Python',
+  'username': 'python'}]
 '''
 
 
