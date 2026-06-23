@@ -1,0 +1,23 @@
+# 1. THESE ARE DICTIONARIES (No hyphens)
+# This allows Python to do: yaml_out["juniper2"]
+juniper1:
+  device_type: "juniper_junos"
+  host: "10.85.173.215"
+  username: "python"
+  password: "Python"
+juniper2:
+  device_type: "juniper_junos"
+  host: "10.85.173.217"
+  username: "python"
+  password: "Python"
+
+
+# 2. THESE ARE THE LISTS (Uses hyphens '-')
+# This allows Python to loop through a group of devices
+cisco: []    # Empty list
+arista: []   # Empty list
+nxos: []     # Empty list
+
+juniper:     # A Python list: ["juniper1", "juniper2"]
+  - "juniper1"
+  - "juniper2"
