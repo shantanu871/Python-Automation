@@ -10,9 +10,15 @@ juniper2:
   host: "10.85.173.217"
   username: "python"
   password: "Python"
+ex_rocket:
+  device_type: "juniper_junos"
+  host: 10.85.173.165
+  username: python
+  password: Python
+    #We dont need quoted in YAML dictr
 
-
-# 2. THESE ARE THE LISTS (Uses hyphens '-')
+# 2. THESE ARE THE LISTS (doesnt Uses hyphens '-', thi sis one mor way to define lsit in YAML, but when we import into python, it will interpret as empty lists)
+# is actually impossible to create a completely empty list with a name using the other style (block style with dashes).
 # This allows Python to loop through a group of devices
 cisco: []    # Empty list
 arista: []   # Empty list
@@ -21,3 +27,4 @@ nxos: []     # Empty list
 juniper:     # A Python list: ["juniper1", "juniper2"]
   - "juniper1"
   - "juniper2"
+  - "ex_rocket"
