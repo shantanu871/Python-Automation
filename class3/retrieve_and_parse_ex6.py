@@ -88,8 +88,8 @@ if __name__ == "__main__":
   except ConnectError as err:
     print(f"Connection failed {err}")
     exit(1)
-  interfaces_container = config_data.find("interfaces")
-  interface_list = interfaces_container.findall("interface")
+  interfaces_container = config_data.find("interfaces") # we are INSIDE interfaces tag
+  interface_list = interfaces_container.findall("interface") # we are inside interface tag
   #Because config_data is the <configuration> tag itself.
 
 #he .find() method looks inside the current tag for its children. It does not look at itself.Hence w dont have find(config). thats how xml works. wihtr config_data, we are inside the <config> tab in XML
@@ -101,23 +101,60 @@ if __name__ == "__main__":
   # I have a separte note on find and findall in word doc
 
   for int in interface_list:
+      print("\n\n\n")
       print(f" - Interface is: {int.findtext('name')}")
+
+      #Now we need to search for units that may be more tha one. So we need findall inside the interface hierarchy.
+
+      unit_list = int.findall("unit") #. this wil return pointers to all units inside that interface
+
+      for unit in unit_list:
+          unit_name = unit.findtext("name")#this wil return "zero 0" string. actually not required so commented it out
+          #L3 address extraxction
+          l3_address = unit.find("family/inet") #find wil return pointer
+          if l3_address is not None:
+              ip = l3_address.findtext("address/name") #find text will retunr actual text
+              print(f" unit {unit_name} IP :{ip}")
+
+          vlan_family = unit.find("family/ethernet-switching/vlan/members") #interface-mode is not specified as it shares same heirarchy as vlan
+          if vlan_family is not None:
+
+              vlan_id = vlan_family.text # here we are jsut doing 'text' as we are alredy in right hierarchy. so just converting pointer to text
+              print(f"vlan id is {vlan_id}")
+
+# two diff method of accessing text
+          
 
 '''
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^FINAL OUTPUT^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-(.venv) root@ubuntu:~/Python-Automation/class3# python3 retrieve_and_parse_ex6.py 
+python3 retrieve_and_parse_ex6.py 
 DUT type
 <class 'dict'>
 DUT content
 {'device_type': 'juniper_junos', 'host': '10.85.173.165', 'username': 'python', 'password': 'Python'}
 Print Interfaces_Container
-<Element interfaces at 0x73d62b7a69c0>
+<Element interfaces at 0x78e404f2a680>
 Print its type
 <class 'lxml.etree._Element'>
+
+
+
+
  - Interface is: ge-0/0/18
+ unit 0 IP :None
+
+
+
+
  - Interface is: xe-0/2/2
+ unit 0 IP :10.64.51.68/28
+
+
+
+
  - Interface is: xe-0/2/3
+vlan id is 197
 
  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Here is a line-by-line breakdown of your code, focusing heavily on how it traverses and extracts the specific XML structures returned by Junos.
