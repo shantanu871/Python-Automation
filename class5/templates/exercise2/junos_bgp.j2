@@ -1,4 +1,4 @@
-set interfaces {{ interface }} family inet address {{ ipv4_address }}/{{ ipv4_netmask }}
+set interfaces {{ interface }} unit 0 family inet address {{ ipv4_address }}/{{ ipv4_netmask }}
 set protocols bgp group INTERNAL-PEERS type internal
 set protocols bgp group INTERNAL-PEERS local-as {{ local_as }}
 set protocols bgp group INTERNAL-PEERS neighbor {{ peer_ip }}
