@@ -1,0 +1,16 @@
+vrf def {{ vrf_name }} 
+!
+ {%- if ipv4_af %}
+ address-family ipv4
+  route-target export {{ rt_value }}
+  route-target import {{ rt_value }}
+ exit-address-family
+ {%- endif %}
+ !
+ {%- if ipv6_af %}
+ address-family ipv6
+  route-target export 100:1
+  route-target import 100:1
+ exit-address-family
+ {%- endif %}
+~                     
