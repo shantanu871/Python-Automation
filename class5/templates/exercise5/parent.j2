@@ -1,0 +1,7 @@
+set interfaces ge-0/0/26 unit 0 family inet address {{ ip_address }}
+set protocols lldp interface all
+set vlans v1364 vlan-id 1364
+set vlans v1364 l3-interface irb.1364
+
+{% include "bgp.j2" %}
+{% include "vlans.j2" %}
